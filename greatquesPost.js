@@ -11,8 +11,18 @@ con.connect(function(err){
     if(err) throw err;
     function question(){
         inquirer.prompt({
-            name:"want to post or bid",
+            name:"wanttopostorbid",
             choices:['bid','post']
+        }).then(function(response){
+            if(response.wanttopostorbid==='bid'){
+                bidMethod();
+            }else{
+                postMethod();
+            }
         })
     }
-} )
+} );
+function postMethod(){
+    
+}
+

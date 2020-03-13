@@ -1,5 +1,6 @@
 var mysql=require('mysql');
 var inquirer=require("inquirer");
+const bid = require('bid');
 var con=mysql.createConnection({
     host:"localhost",
     port:"3306",
@@ -15,7 +16,7 @@ con.connect(function(err){
             choices:['bid','post']
         }).then(function(response){
             if(response.wanttopostorbid==='bid'){
-                bidMethod();
+                bid.auctionBid();
             }else{
                 postMethod();
             }
@@ -23,6 +24,25 @@ con.connect(function(err){
     }
 } );
 function postMethod(){
+    inquirer.prompt([
+        {
+          name:"item",
+           type:"input",
+           message:"Item you are posting for the biding" 
+        }
+    ]).then(function(response){
+    console.log("Deleting all strawberry icecream...\n"); 
+     con.query(
+         "INSERT INTO postItem SET",
+         {
+             name:response.item
+         },
+         function(err){
+             if(err) throw err;
+             console.log("POst item set is created.")
+         }
+     )
+    })
     
 }
 
